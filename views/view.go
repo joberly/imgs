@@ -25,8 +25,8 @@ func NewView(layout string, files ...string) *View {
 	}
 }
 
-// Execute executes the template, writing the results to the io.Writer.
-func (v *View) Execute(wr io.Writer, data interface{}) error {
+// Render executes the Layout template, writing the results to the io.Writer.
+func (v *View) Render(wr io.Writer, data interface{}) error {
 	return v.Template.ExecuteTemplate(wr, v.Layout, data)
 }
 

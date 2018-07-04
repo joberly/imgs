@@ -15,18 +15,12 @@ var (
 
 func handlerHome(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
-	err := homeView.Execute(w, nil)
-	if err != nil {
-		panic(err)
-	}
+	must(homeView.Render(w, nil))
 }
 
 func handlerContact(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
-	err := contactView.Execute(w, nil)
-	if err != nil {
-		panic(err)
-	}
+	must(contactView.Render(w, nil))
 }
 
 func handlerNotFound(w http.ResponseWriter, r *http.Request) {
@@ -43,4 +37,10 @@ func main() {
 	r.HandleFunc("/contact", handlerContact)
 	r.NotFoundHandler = http.HandlerFunc(handlerNotFound)
 	http.ListenAndServe(":3000", r)
+}
+
+func must(err error) {
+	if err != nil {
+		panic(err)
+	}
 }
