@@ -3,15 +3,16 @@ package views
 import (
 	"html/template"
 	"io"
+	"path/filepath"
 )
 
 // NewView creates a new View from the given HTML template files.
 func NewView(layout string, files ...string) *View {
-	files = append(files,
-		"views/layouts/bootstrap.gohtml",
-		"views/layouts/navbar.gohtml",
-		"views/layouts/footer.gohtml",
-	)
+	matches, err := filepath.Glob("views/layouts/*.gohtml")
+	if err != nil {
+		panic(err)
+	}
+	files = append(files, matches...)
 
 	t, err := template.ParseFiles(files...)
 	if err != nil {
